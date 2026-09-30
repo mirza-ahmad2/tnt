@@ -1,0 +1,434 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * TTN Talent design system.
+ * Three colours only: near-black #111214, signal blue #2E6FF2, light #F6F6F5.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-ink: var(--ink);
+  --color-signal: var(--signal);
+  --color-paper: var(--paper);
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.25rem;
+
+  --ink: oklch(0.18 0.006 265);
+  --signal: oklch(0.58 0.204 262);
+  --paper: oklch(0.972 0.002 106);
+
+  --background: var(--ink);
+  --foreground: var(--paper);
+  --card: oklch(0.225 0.006 265);
+  --card-foreground: var(--paper);
+  --popover: oklch(0.225 0.006 265);
+  --popover-foreground: var(--paper);
+  --primary: var(--signal);
+  --primary-foreground: var(--paper);
+  --secondary: oklch(0.26 0.006 265);
+  --secondary-foreground: var(--paper);
+  --muted: oklch(0.26 0.006 265);
+  --muted-foreground: oklch(0.72 0.004 265);
+  --accent: oklch(0.28 0.006 265);
+  --accent-foreground: var(--paper);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: var(--paper);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: var(--signal);
+
+  --ease-out-premium: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 180ms;
+  --duration-base: 280ms;
+  --duration-slow: 520ms;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--signal) 45%, transparent);
+    color: var(--paper);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* Content container — consistent left/right breathing room on all breakpoints */
+@utility shell {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5.5vw, 4.5rem);
+  box-sizing: border-box;
+}
+
+/* Hero content container — aligned with shell gutters */
+@utility hero-shell {
+  width: 100%;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5.5vw, 4.5rem);
+  box-sizing: border-box;
+  text-align: center;
+}
+
+@utility snap-page {
+  scroll-snap-type: y proximity;
+  scroll-padding-top: 0px;
+}
+
+@utility snap-section {
+  scroll-snap-align: start;
+}
+
+@utility rule-signal {
+  &::after {
+    content: "";
+    display: block;
+    width: 3.5rem;
+    height: 2px;
+    margin-top: 1.25rem;
+    background: var(--signal);
+    transform-origin: left center;
+    transition: width var(--duration-base) var(--ease-out-premium);
+  }
+}
+
+@utility text-balance-tight {
+  text-wrap: balance;
+}
+
+@utility fade-up {
+  animation: ttn-fade-up 0.85s var(--ease-out-premium) both;
+}
+
+@utility btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--signal);
+  padding: 0.875rem 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--paper);
+  transition:
+    transform var(--duration-fast) var(--ease-out-premium),
+    background-color var(--duration-fast) ease,
+    box-shadow var(--duration-fast) ease;
+  box-shadow: 0 0 0 0 color-mix(in oklab, var(--signal) 0%, transparent);
+}
+
+@utility btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid var(--border);
+  padding: 0.875rem 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition:
+    transform var(--duration-fast) var(--ease-out-premium),
+    background-color var(--duration-fast) ease,
+    border-color var(--duration-fast) ease;
+}
+
+@utility btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--signal);
+  transition:
+    opacity var(--duration-fast) ease,
+    transform var(--duration-fast) var(--ease-out-premium),
+    gap var(--duration-fast) ease;
+}
+
+@utility surface-card {
+  background: var(--background);
+  padding: 2rem;
+  transition:
+    background-color var(--duration-base) ease,
+    transform var(--duration-base) var(--ease-out-premium),
+    box-shadow var(--duration-base) ease;
+}
+
+@utility media-frame {
+  overflow: hidden;
+  isolation: isolate;
+}
+
+@utility media-zoom {
+  transition: transform var(--duration-slow) var(--ease-out-premium);
+  will-change: transform;
+}
+
+@keyframes ttn-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ttn-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ttn-nav-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity var(--duration-slow) var(--ease-out-premium),
+    transform var(--duration-slow) var(--ease-out-premium);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.page-enter {
+  animation: ttn-page-in 0.45s var(--ease-out-premium) both;
+}
+
+.site-header {
+  transition:
+    background-color var(--duration-base) ease,
+    border-color var(--duration-base) ease,
+    box-shadow var(--duration-base) ease,
+    backdrop-filter var(--duration-base) ease;
+}
+
+.site-header.is-scrolled {
+  background-color: color-mix(in oklab, var(--ink) 88%, transparent);
+  border-color: color-mix(in oklab, var(--paper) 16%, transparent);
+  box-shadow: 0 12px 40px color-mix(in oklab, black 35%, transparent);
+}
+
+.nav-link {
+  position: relative;
+  transition: color var(--duration-fast) ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.35rem;
+  width: 100%;
+  height: 1.5px;
+  background: var(--signal);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--duration-base) var(--ease-out-premium);
+}
+
+.nav-link:hover::after,
+.nav-link[data-status="active"]::after {
+  transform: scaleX(1);
+}
+
+.btn-primary:hover {
+  background: color-mix(in oklab, var(--signal) 88%, white);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px color-mix(in oklab, var(--signal) 28%, transparent);
+}
+
+.btn-primary:active,
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary:hover {
+  background: var(--accent);
+  border-color: color-mix(in oklab, var(--paper) 28%, transparent);
+  transform: translateY(-1px);
+}
+
+.btn-ghost:hover {
+  opacity: 0.85;
+  gap: 0.75rem;
+}
+
+.surface-card:hover {
+  background: color-mix(in oklab, var(--card) 88%, var(--signal));
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px color-mix(in oklab, black 28%, transparent);
+}
+
+.media-frame:hover .media-zoom {
+  transform: scale(1.04);
+}
+
+.form-field {
+  width: 100%;
+  border: 1px solid var(--input);
+  background: transparent;
+  padding: 0.85rem 1rem;
+  font-size: 0.875rem;
+  outline: none;
+  transition:
+    border-color var(--duration-fast) ease,
+    box-shadow var(--duration-fast) ease,
+    background-color var(--duration-fast) ease;
+}
+
+.form-field::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-field:hover {
+  border-color: color-mix(in oklab, var(--paper) 28%, transparent);
+}
+
+.form-field:focus {
+  border-color: var(--signal);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--signal) 22%, transparent);
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100%;
+  z-index: 100;
+  background: var(--signal);
+  color: var(--paper);
+  padding: 0.65rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: top var(--duration-fast) ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+.footer-link {
+  transition:
+    color var(--duration-fast) ease,
+    transform var(--duration-fast) var(--ease-out-premium);
+}
+
+.footer-link:hover {
+  color: var(--foreground);
+  transform: translateX(2px);
+}
+
+.mobile-drawer {
+  animation: ttn-nav-in 0.28s var(--ease-out-premium) both;
+}
+
+@media (max-width: 640px) {
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    min-height: 48px;
+  }
+}
